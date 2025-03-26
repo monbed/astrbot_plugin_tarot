@@ -263,7 +263,7 @@ class Tarot:
         return "占卜群聊转发模式已开启~" if new_state else "占卜群聊转发模式已关闭~"
 
 
-@register("tarot", "XziXmn", "塔罗牌占卜插件", "0.1.1")
+@register("tarot", "XziXmn", "赛博塔罗牌占卜插件", "0.1.1")
 class TarotPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig):
         super().__init__(context)
@@ -274,7 +274,7 @@ class TarotPlugin(Star):
         try:
             if "帮助" in text:
                 yield event.plain_result(
-                    "塔罗牌 v0.1.1\n"
+                    "赛博塔罗牌 v0.1.1\n"
                     "[占卜] 随机选取牌阵进行占卜并提供 AI 解析，可附加关键词（如 '占卜 情感'）匹配牌阵\n"
                     "[塔罗牌] 得到单张塔罗牌回应及 AI 解析\n"
                     "[开启/关闭群聊转发] 切换群聊转发模式"
@@ -292,7 +292,7 @@ class TarotPlugin(Star):
         try:
             if "帮助" in text:
                 yield event.plain_result(
-                    "塔罗牌 v0.1.1\n"
+                    "赛博塔罗牌 v0.1.1\n"
                     "[占卜] 随机选取牌阵进行占卜并提供 AI 解析，可附加关键词（如 '占卜 情感'）匹配牌阵\n"
                     "[塔罗牌] 得到单张塔罗牌回应及 AI 解析\n"
                     "[开启/关闭群聊转发] 切换群聊转发模式"
