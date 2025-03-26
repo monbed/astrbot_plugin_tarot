@@ -2,7 +2,7 @@
 
 # Tarot
 
-_🔮 塔罗牌 🔮_
+_🔮 赛博塔罗牌 🔮_
 
 </div>
 
@@ -40,39 +40,23 @@ _“许多傻瓜对千奇百怪的迷信说法深信不疑：象牙、护身符�
 
 ## 版本
 
-🧰 [v0.4.0.post4](https://github.com/MinatoAquaCrews/nonebot_plugin_tarot/releases/tag/v0.4.0.post4)
+🧰 [v0.1.0](https://github.com/yzjmxy/astrbot_plugin_tarot)
 
-⚠ 适配nonebot2-2.0.0b3+
+⚠ 适配astrbot v3.4.39
 
 👉 [如何添加新的塔罗牌主题资源？](./How-to-add-new-tarot-theme.md)欢迎贡献！🙏
 
 ## 安装
 
-1. 通过 `pip` 或 `nb` 安装。pypi无法发行过大安装包，由此安装的插件不包含 `./resource` 下**所有塔罗牌主题资源**。请在[v0.4.0 release](https://github.com/MinatoAquaCrews/nonebot_plugin_tarot/releases/tag/v0.4.0)页面下载各主题资源，部署至本地后修改 `TAROT_PATH` 配置即可；
-
-2. `env` 下设置 `TAROT_PATH` 以更改资源路径；`CHAIN_REPLY` 设置全局群聊转发模式（避免刷屏），亦可通过命令修改；`TAROT_AUTO_UPDATE` 开启则插件将在启动时自动检查更新（默认关闭）。例如：
-
-   ```python
-   TAROT_PATH="path-to-your-resource"
-   CHAIN_REPLY=false
-   TAROT_AUTO_UPDATE=false
-   ```
-
-   ⚠ 请为塔罗牌资源分配单独的目录存放！即某一目录下仅有塔罗牌的所有资源。[#26](https://github.com/MinatoAquaCrews/nonebot_plugin_tarot/issues/26)
-
-3. 启动时，插件会自动下载repo中最新的 `tarot.json` 文件，`tarot.json` 不一定随插件版本更新；
-
-4. 图片资源可选择**不部署在本地**，插件会自动尝试从repo中下载缓存。
-
-   ⚠ 使用 `raw.fgit.ml` 进行下载，不确保次次成功
+暂时需要下载自行放入插件目录。
 
 ## 命令
 
-1. 启用牌阵进行占卜：[占卜]；
+1. [占卜] 随机选取牌阵进行占卜并提供 AI 解析，可附加关键词（如 '占卜 情感'）匹配牌阵；
 
-2. 得到单张塔罗牌回应：[塔罗牌]；
+2. [塔罗牌] 得到单张塔罗牌回应及 AI 解析；
 
-3. [超管] 群聊转发模式全局开关：[开启|启用|关闭|禁用] 群聊转发模式，可降低风控风险。
+3. [开启/关闭群聊转发] 切换群聊转发模式。
 
 ## 资源说明
 
@@ -95,18 +79,10 @@ _“许多傻瓜对千奇百怪的迷信说法深信不疑：象牙、护身符�
 
    🤔 也可以说是作者的解读版本
 
-4. 牌面资源下载：
-
-   - BilibiliTarot：[阿里云盘](https://www.aliyundrive.com/s/cvbxLQQ9wD5/folder/61000cc1c78a1da52ef548beb9591a01bdb09a79)
-
-     ⚠ 文件夹名称、大阿卡纳恶魔牌(The Devil)名称、权杖4名称、女皇牌(The Empress)名称有修改
-
-   - TouhouTarot：[Oeeder/PluginVoodoo-Touhou](https://github.com/Oeeder/PluginVoodoo-Touhou/releases/tag/PluginVoodoo)，原作：[燕山/切り絵東方タロットカード大アルカナ22枚](https://www.pixiv.net/artworks/93632047)
-
-     ⚠ 文件名称有修改
-
 ## 本插件改自
 
 1. [真寻bot插件库/tarot](https://github.com/AkashiCoin/nonebot_plugins_zhenxun_bot)
 
 2. [haha114514/tarot_hoshino](https://github.com/haha114514/tarot_hoshino)
+
+3.  [hMinatoAquaCrews/nonebot_plugin_tarot](https://github.com/MinatoAquaCrews/nonebot_plugin_tarot)
