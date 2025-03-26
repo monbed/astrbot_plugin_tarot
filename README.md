@@ -16,7 +16,7 @@ _“许多傻瓜对千奇百怪的迷信说法深信不疑：象牙、护身符�
 
 ## 版本
 
-🧰 [v0.1.0](https://github.com/yzjmxy/astrbot_plugin_tarot)
+🧰 [v0.1.1](https://github.com/yzjmxy/astrbot_plugin_tarot)
 
 ⚠ 适配astrbot v3.4.39
 
