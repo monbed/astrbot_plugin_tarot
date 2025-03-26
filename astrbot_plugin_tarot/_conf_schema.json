@@ -1,0 +1,12 @@
+{
+  "chain_reply": {
+    "type": "bool",
+    "default": true,
+    "description": "是否启用群聊合并转发模式"
+  },
+  "resource_path": {
+    "type": "string",
+    "default": "./resources",
+    "description": "塔罗牌图片资源目录路径，相对于插件根目录"
+  }
+}
