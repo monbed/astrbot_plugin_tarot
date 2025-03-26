@@ -21,12 +21,13 @@ class Tarot:
         resource_path_str: str = config.get("resource_path", "resource")
         self.resource_path: Path = Path(__file__).parent / resource_path_str
         self.is_chain_reply: bool = config.get("chain_reply", True)
+        self.include_ai_in_chain: bool = config.get("include_ai_in_chain", False)  # 新增配置项
         
         os.makedirs(self.resource_path, exist_ok=True)
         if not self.tarot_json.exists():
             logger.error("tarot.json 文件缺失，请确保资源完整！")
             raise Exception("tarot.json 文件缺失，请确保资源完整！")
-        logger.info(f"Tarot 插件初始化完成，资源路径: {self.resource_path}")
+        logger.info(f"Tarot 插件初始化完成，资源路径: {self.resource_path}, AI 解析加入转发: {self.include_ai_in_chain}")
 
     def pick_theme(self) -> str:
         sub_themes_dir: List[str] = [f.name for f in self.resource_path.iterdir() if f.is_dir()]
@@ -192,11 +193,29 @@ class Tarot:
                     )
                     chain.nodes.append(node)
                     results.append((header, text, img_path))
+                
+                # 生成 AI 解析
+                bot_name = self.context.get_config().get("nickname", "占卜师")
+                interpretation = await self._generate_ai_interpretation(formation_name, cards_info_list, representations, is_upright_list, user_input)
+                
+                # 根据配置决定是否将 AI 解析加入转发
+                if self.include_ai_in_chain:
+                    ai_node = Node(
+                        uin=event.get_self_id(),
+                        name=bot_name,
+                        content=[Plain(f"\n“属于你的占卜分析！”\n{interpretation}")]
+                    )
+                    chain.nodes.append(ai_node)
+                
                 if not chain.nodes:
                     yield event.plain_result("无法生成塔罗牌结果，请稍后重试")
                     return
-                logger.info(f"群聊转发发送 {len(chain.nodes)} 张塔罗牌")
+                logger.info(f"群聊转发发送 {len(chain.nodes)} 张塔罗牌，AI 解析是否包含: {self.include_ai_in_chain}")
                 yield event.chain_result([chain])
+                
+                # 如果 AI 解析未加入转发，则单独发送
+                if not self.include_ai_in_chain:
+                    yield event.plain_result(f"\n“属于你的占卜分析！”\n{interpretation}")
             else:
                 for i in range(cards_num):
                     header = f"切牌「{representations[i]}」\n" if (is_cut and i == cards_num - 1) else f"第{i+1}张牌「{representations[i]}」\n"
@@ -210,10 +229,10 @@ class Tarot:
                     if i < cards_num - 1:
                         await asyncio.sleep(2)
 
-            # 在所有牌面发送完成后生成 AI 解析，传入完整用户输入
-            bot_name = self.context.get_config().get("nickname", "占卜师")
-            interpretation = await self._generate_ai_interpretation(formation_name, cards_info_list, representations, is_upright_list, user_input)
-            yield event.plain_result(f"\n“属于你的占卜分析！”\n{interpretation}")
+                # 非群聊转发模式，AI 解析单独发送
+                bot_name = self.context.get_config().get("nickname", "占卜师")
+                interpretation = await self._generate_ai_interpretation(formation_name, cards_info_list, representations, is_upright_list, user_input)
+                yield event.plain_result(f"\n“属于你的占卜分析！”\n{interpretation}")
         except Exception as e:
             logger.error(f"占卜过程出错: {str(e)}")
             yield event.plain_result(f"占卜失败: {str(e)}")
@@ -244,7 +263,7 @@ class Tarot:
         return "占卜群聊转发模式已开启~" if new_state else "占卜群聊转发模式已关闭~"
 
 
-@register("tarot", "XziXmn", "赛博塔罗牌塔罗牌占卜插件", "0.1.0")
+@register("tarot", "XziXmn", "塔罗牌占卜插件", "0.1.1")
 class TarotPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig):
         super().__init__(context)
@@ -255,7 +274,7 @@ class TarotPlugin(Star):
         try:
             if "帮助" in text:
                 yield event.plain_result(
-                    "赛博塔罗牌塔罗牌 v0.1.0\n"
+                    "塔罗牌 v0.1.1\n"
                     "[占卜] 随机选取牌阵进行占卜并提供 AI 解析，可附加关键词（如 '占卜 情感'）匹配牌阵\n"
                     "[塔罗牌] 得到单张塔罗牌回应及 AI 解析\n"
                     "[开启/关闭群聊转发] 切换群聊转发模式"
@@ -273,7 +292,7 @@ class TarotPlugin(Star):
         try:
             if "帮助" in text:
                 yield event.plain_result(
-                    "赛博塔罗牌 v0.1.0\n"
+                    "塔罗牌 v0.1.1\n"
                     "[占卜] 随机选取牌阵进行占卜并提供 AI 解析，可附加关键词（如 '占卜 情感'）匹配牌阵\n"
                     "[塔罗牌] 得到单张塔罗牌回应及 AI 解析\n"
                     "[开启/关闭群聊转发] 切换群聊转发模式"
