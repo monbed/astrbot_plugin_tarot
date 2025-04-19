@@ -1,0 +1,18 @@
+{
+  "chain_reply": {
+    "type": "bool",
+    "default": true,
+    "description": "是否启用群聊合并转发模式"
+  },
+  "resource_path": {
+    "type": "string",
+    "default": "./resources",
+    "hint": "目录中仅包含初始资源。扩展资源请自行下载，并添加到对应目录中。塔罗资源：https://www.123912.com/s/UQZ8Vv-uOLav? 提取码:omBT",
+    "description": "塔罗牌图片资源目录路径，相对于插件根目录"
+  },
+  "include_ai_in_chain": {
+    "type": "bool",
+    "default": true,
+    "description": "是否将 AI 解析信息加入群聊转发，若为 false 则单独发送"
+  }
+}
